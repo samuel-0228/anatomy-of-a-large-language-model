@@ -1,6 +1,6 @@
 import React from 'react';
 import { llmData } from '../data/llmData';
-import { ArrowLeft, Box, Cpu, Database, Layers, GitMerge, Activity } from 'lucide-react';
+import { ArrowLeft, Box, Cpu, Database, Layers, GitMerge, Activity, Info } from 'lucide-react';
 
 // Icons mapped to layers for a more sophisticated look
 const layerIcons = [Box, Database, Layers, Cpu, GitMerge, Activity];
@@ -84,6 +84,30 @@ const UIOverlay = ({ learningMode, setLearningMode, activeLayer, setActiveLayer 
         })}
       </div>
 
+      {/* General Explanation Panel (Right side, visible only when NO layer is active) */}
+      <div 
+        className="general-panel glass-panel"
+        style={{
+          opacity: activeLayer === null ? 1 : 0,
+          pointerEvents: activeLayer === null ? 'auto' : 'none'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+          <Info size={20} color="#3b82f6" />
+          <h2 style={{ margin: 0, fontSize: '18px' }}>About This Visualization</h2>
+        </div>
+        <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)' }}>
+          This is a <strong>3D Cutaway Infographic</strong> demonstrating the internal anatomy of a Large Language Model (LLM). 
+        </p>
+        <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)' }}>
+          Instead of reading static text, you are exploring a simulated "machine". The floating particles represent digital tokens (data) flowing through the neural network.
+        </p>
+        <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '8px', borderLeft: '3px solid #3b82f6' }}>
+          <strong style={{ fontSize: '13px', display: 'block', marginBottom: '4px' }}>How to Use:</strong>
+          <span style={{ fontSize: '13px', color: '#ccc' }}>Click on any of the glowing rectangular slabs in the middle to dive deeper into that specific processing layer.</span>
+        </div>
+      </div>
+
       {/* Back Button (Only in Focus Mode) */}
       {activeLayer !== null && (
         <button className="back-btn glass-panel" style={{ top: '120px' }} onClick={() => setActiveLayer(null)}>
@@ -92,7 +116,7 @@ const UIOverlay = ({ learningMode, setLearningMode, activeLayer, setActiveLayer 
         </button>
       )}
 
-      {/* Bottom Information Panel */}
+      {/* Bottom Information Panel (Visible when a layer IS active) */}
       <div className="bottom-panel">
         <div 
           className="info-card glass-panel" 

@@ -4,6 +4,7 @@ export const llmData = [
     title: "1. Prompt Ingestion",
     color: "#3b82f6", // blue
     zPosition: 6,
+    image: "/assets/input.png",
     simple: {
       desc: "This is where your prompt goes in. The model reads your text just like a person starting to read a sentence, preparing to figure out what you mean.",
       example: 'User Prompt: "Explain quantum physics..."',
@@ -20,6 +21,7 @@ export const llmData = [
     title: "2. Tokenizer Pipeline",
     color: "#a855f7", // purple
     zPosition: 3,
+    image: "/assets/tokenizer.png",
     simple: {
       desc: "The model doesn't read words; it reads 'tokens'. It chops your words into smaller chunks. A token can be a whole word, a syllable, or even a single letter.",
       example: '"Hello, world!" becomes ["Hello", ",", " world", "!"]',
@@ -36,6 +38,7 @@ export const llmData = [
     title: "3. Embedding Space",
     color: "#06b6d4", // cyan
     zPosition: 0,
+    image: "/assets/embedding.png",
     simple: {
       desc: "Each token is turned into a long list of numbers. Words that have similar meanings end up with similar numbers, like plotting points on a massive mathematical map.",
       example: '"King" and "Queen" would be placed close together on this map.',
@@ -52,6 +55,7 @@ export const llmData = [
     title: "4. Transformer Blocks",
     color: "#f97316", // orange
     zPosition: -3,
+    image: "/assets/transformer.png",
     simple: {
       desc: "The core engine. It passes the numbers through many repeating layers, slowly understanding the context of the whole sentence by looking at all the words together.",
       example: "Understanding that 'bank' means 'river bank' instead of 'money bank' based on surrounding words.",
@@ -68,6 +72,7 @@ export const llmData = [
     title: "5. Attention Mechanism",
     color: "#eab308", // yellow
     zPosition: -6,
+    image: "/assets/attention.png",
     simple: {
       desc: "Inside the transformer, 'attention' decides which words are most important to look at right now to understand the current word.",
       example: "In 'The cat sat on the mat because it was tired', attention links 'it' strongly to 'cat'.",
@@ -81,9 +86,10 @@ export const llmData = [
   },
   {
     id: "output",
-    title: "6. Output Projection (Softmax)",
+    title: "6. Output Projection",
     color: "#22c55e", // green
     zPosition: -9,
+    image: "/assets/output.png",
     simple: {
       desc: "After processing, the model guesses the very next word. Then it takes that new word, feeds it back to the beginning, and repeats the whole process to write a sentence!",
       example: "Guesses the next word is 'physics' with 92% certainty.",

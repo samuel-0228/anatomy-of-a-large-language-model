@@ -7,13 +7,16 @@ import DataParticles from './DataParticles';
 const SceneContent = ({ activeLayer, setActiveLayer }) => {
   const groupRef = useRef();
 
-  // Subtle floating and parallax based on mouse
+  // Floating and parallax, shifting between diagonal overview and centered focus
   useFrame((state) => {
     if (!groupRef.current) return;
     
-    // Smoothly interpolate group rotation based on pointer
-    const targetX = (state.pointer.y * Math.PI) / 16;
-    const targetY = (state.pointer.x * Math.PI) / 16;
+    // Diagonal presentation when no layer is selected, centered when focused
+    const targetBaseRotationX = activeLayer === null ? Math.PI / 12 : 0;
+    const targetBaseRotationY = activeLayer === null ? -Math.PI / 8 : 0;
+
+    const targetX = targetBaseRotationX + (state.pointer.y * Math.PI) / 32;
+    const targetY = targetBaseRotationY + (state.pointer.x * Math.PI) / 32;
     
     groupRef.current.rotation.x += 0.05 * (targetX - groupRef.current.rotation.x);
     groupRef.current.rotation.y += 0.05 * (targetY - groupRef.current.rotation.y);
@@ -28,9 +31,9 @@ const SceneContent = ({ activeLayer, setActiveLayer }) => {
       <Environment preset="city" />
 
       <group ref={groupRef}>
-        <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.5}>
-          {/* Slight isometric angle by default */}
-          <group rotation={[Math.PI / 12, -Math.PI / 8, 0]}>
+        <Float speed={1.5} rotationIntensity={0.05} floatIntensity={0.5}>
+          {/* Base rotation is handled dynamically in useFrame now */}
+          <group>
             <LLMPipeline activeLayer={activeLayer} setActiveLayer={setActiveLayer} />
             <DataParticles activeLayer={activeLayer} />
           </group>
@@ -41,8 +44,9 @@ const SceneContent = ({ activeLayer, setActiveLayer }) => {
       <OrbitControls 
         enablePan={false}
         enableZoom={false}
+        // Allow slight rotation by the user
         minPolarAngle={Math.PI / 3}
-        maxPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2 + 0.2}
       />
     </>
   );
@@ -51,7 +55,7 @@ const SceneContent = ({ activeLayer, setActiveLayer }) => {
 const Scene = ({ activeLayer, setActiveLayer }) => {
   return (
     <Canvas 
-      camera={{ position: [0, 0, 12], fov: 45 }}
+      camera={{ position: [0, 0, 14], fov: 45 }}
       dpr={[1, 2]} // Better performance/quality balance
       gl={{ antialias: true, alpha: false }}
       style={{ background: '#0b0f14' }}

@@ -48,6 +48,7 @@ body {
   border-radius: 20px;
   padding: 4px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: auto; /* MUST have pointer-events auto */
 }
 
 .mode-btn {
@@ -68,27 +69,21 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.layer-indicator {
-  position: relative;
-  width: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  margin-right: 16px;
-}
-
-.layer-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
 .info-card {
-  pointer-events: auto;
+  pointer-events: auto; /* Allow clicks on the card itself */
   max-width: 320px;
   transition: opacity 0.3s ease;
+}
+
+.general-panel {
+  pointer-events: auto;
+  max-width: 350px;
+  padding: 24px;
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.4s ease;
 }
 
 .overlay-container {
@@ -97,25 +92,29 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* Let clicks pass through to 3D canvas */
+  pointer-events: none; /* VERY IMPORTANT: Let clicks pass through to 3D canvas */
   display: flex;
   flex-direction: column;
   z-index: 10;
 }
 
 .top-bar {
-  pointer-events: auto;
+  pointer-events: none; /* Let clicks pass through gaps */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 24px 32px;
 }
 
+.title-container {
+  pointer-events: auto; /* Allow hover/clicks on title if needed */
+}
+
 .bottom-panel {
   margin-top: auto;
   padding: 32px;
   display: flex;
-  pointer-events: auto;
+  pointer-events: none; /* DO NOT BLOCK CANVAS CLICKS HERE */
   justify-content: flex-end;
 }
 
@@ -144,7 +143,7 @@ body {
   gap: 8px;
   font-size: 14px;
   transition: all 0.2s;
-  pointer-events: auto;
+  pointer-events: auto; /* Make button clickable */
   position: absolute;
   top: 100px;
   left: 32px;
@@ -156,12 +155,4 @@ body {
 
 .tooltip {
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 8px 12px;
-  border-radius: 6px;
-  color: white;
-  font-size: 12px;
-  white-space: nowrap;
-  backdrop-filter: blur(4px);
 }

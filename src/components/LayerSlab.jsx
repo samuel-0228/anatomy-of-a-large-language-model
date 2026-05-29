@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Suspense } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Html, Edges, Text } from '@react-three/drei';
+import { Html, Edges, Text, Image } from '@react-three/drei';
 import * as THREE from 'three';
 
 const LayerSlab = ({ data, index, activeLayer, setActiveLayer }) => {
@@ -126,6 +126,17 @@ const LayerSlab = ({ data, index, activeLayer, setActiveLayer }) => {
           opacity={isActive || hovered ? 0.4 : 0.1} 
         />
       </mesh>
+
+      {/* Embedded Image Icon representing the layer's role */}
+      <Suspense fallback={null}>
+        <Image 
+          url={data.image} 
+          position={[0, 0, 0.26]} // Slightly in front of the glass surface
+          scale={[3, 3]} // Adjust size to fit nicely in the 7x4.5 slab
+          transparent
+          opacity={isOtherActive ? 0.1 : 0.85}
+        />
+      </Suspense>
 
     </group>
   );
