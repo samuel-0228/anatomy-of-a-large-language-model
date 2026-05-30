@@ -14,7 +14,8 @@ export const llmData = [
       desc: "Raw string sequences are ingested. The input is bounded by a context window (e.g., 8k to 128k tokens). Here, the system might inject system prompts or chat templates (like <|im_start|>user).",
       example: "Input String -> Character Stream Buffer",
       keyPoints: ["Context window boundaries", "System prompt injection", "ChatML formatting applied"]
-    }
+    },
+    branches: []
   },
   {
     id: "tokenization",
@@ -31,7 +32,8 @@ export const llmData = [
       desc: "Employs an algorithm like Byte-Pair Encoding (BPE), WordPiece, or SentencePiece to segment text into subwords. These subwords are mapped to integer IDs based on a pre-trained vocabulary (typically 32,000 to 128,000 tokens).",
       example: 'String: "Quantum" -> Tokens: ["Qu", "ant", "um"] -> IDs: [4501, 231, 98]',
       keyPoints: ["BPE / SentencePiece Algorithms", "Integer ID Mapping", "Vocabulary Size (~100k)", "Handles unknown chars via byte-fallback"]
-    }
+    },
+    branches: []
   },
   {
     id: "embedding",
@@ -48,7 +50,8 @@ export const llmData = [
       desc: "Tokens are mapped to dense, high-dimensional vectors (e.g., d_model = 4096 dimensions). Positional encodings (like Rotary Positional Embeddings - RoPE) are added or injected so the model retains sequence order.",
       example: "Token ID 4501 -> Vector: [0.12, -0.55, 0.89, ... 4096 dimensions]",
       keyPoints: ["High-dimensional vectors (d_model)", "Semantic proximity", "Rotary Positional Encodings (RoPE)"]
-    }
+    },
+    branches: []
   },
   {
     id: "transformer",
@@ -65,7 +68,11 @@ export const llmData = [
       desc: "A deep stack of repeating blocks (e.g., Llama 3 has 32-80 layers). Each block contains a Self-Attention mechanism followed by a Feed-Forward Network (usually a SwiGLU variant), with RMSNorm and residual connections bridging them.",
       example: "Input -> RMSNorm -> Attention -> Add -> RMSNorm -> FFN -> Add",
       keyPoints: ["Residual / Skip Connections", "RMSNorm instead of LayerNorm", "SwiGLU Activation Networks", "Gradient flow preservation"]
-    }
+    },
+    branches: [
+      { id: "ffn", title: "Feed-Forward (SwiGLU)", position: [0, 4.5, 0] },
+      { id: "rmsnorm", title: "RMS Normalization", position: [0, -4.5, 0] }
+    ]
   },
   {
     id: "attention",
@@ -82,7 +89,12 @@ export const llmData = [
       desc: "Multi-Head Attention projects inputs into Queries (Q), Keys (K), and Values (V). It computes attention scores: Softmax(QK^T / sqrt(d_k)) * V. Modern LLMs use Grouped-Query Attention (GQA) and KV Caching to speed up generation.",
       example: "Matrix Dimensions: Q [seq, d_k], K [seq, d_k], V [seq, d_v]",
       keyPoints: ["Multi-Head / Grouped-Query Attention", "Query, Key, Value Projections", "KV Cache for autoregressive generation"]
-    }
+    },
+    branches: [
+      { id: "query", title: "Query (Q)", position: [-5, 3, 0] },
+      { id: "key", title: "Key (K)", position: [0, 4.5, 0] },
+      { id: "value", title: "Value (V)", position: [5, 3, 0] }
+    ]
   },
   {
     id: "output",
@@ -99,6 +111,10 @@ export const llmData = [
       desc: "The final hidden state passes through an RMSNorm and a linear projection head mapping d_model to Vocabulary Size. A Softmax function converts these logits into a probability distribution. Sampling techniques (Temperature, Top-K, Top-P) pick the final token.",
       example: "Logits [Vocab_Size] -> Softmax -> Probability -> Temperature Scaling -> Sampled Token ID",
       keyPoints: ["Linear Language Modeling Head", "Softmax Probability Distribution", "Temperature, Top-P (Nucleus), Top-K Sampling"]
-    }
+    },
+    branches: [
+      { id: "linear", title: "Linear Layer (Logits)", position: [-4, 3, 0] },
+      { id: "softmax", title: "Softmax Distribution", position: [4, 3, 0] }
+    ]
   }
 ];
